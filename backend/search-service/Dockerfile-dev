@@ -1,0 +1,10 @@
+# Working Directory
+WORKDIR /app
+
+FROM openjdk:8-jdk
+
+# Add search-service.jar to container
+COPY /target/search-service.jar /app/search-service.jar
+
+# Fire up our service app by default
+CMD ["sh", "-c", "java -Dserver.port=$PORT -Xmx300m -Xss512k -XX:CICompilerCount=2 -Dfile.encoding=UTF-8 -XX:+UseContainerSupport -Dspring.profiles.active=$ACTIVE_PROFILE -Djava.security.egd=file:/dev/./urandom -jar search-service.jar" ]
